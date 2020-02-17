@@ -1,7 +1,8 @@
 name: darter_bloc
 description: Flexible but case-specific architectures based on the BLoC pattern.
-version: 0.0.1
+version: 0.0.2
 homepage: https://darter.io
+repository: https://github.com/darter/darter_bloc
 author: Eduardo del Palacio Lirola <eddydpyl@gmail.com>
 
 environment:
