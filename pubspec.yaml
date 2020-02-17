@@ -2,6 +2,7 @@ name: darter_bloc
 description: Flexible but case-specific architectures based on the BLoC pattern.
 version: 0.0.1
 homepage: https://darter.io
+author: Eduardo del Palacio Lirola <eddydpyl@gmail.com>
 
 environment:
   sdk: '>=2.5.0 <3.0.0'
