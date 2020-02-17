@@ -1,0 +1,13 @@
+name: darter_bloc
+description: Flexible but case-specific architectures based on the BLoC pattern.
+version: 0.0.1
+homepage: https://darter.io
+
+environment:
+  sdk: '>=2.5.0 <3.0.0'
+
+dependencies:
+  rxdart: ^0.22.6
+
+dev_dependencies:
+  test: ^1.6.0
