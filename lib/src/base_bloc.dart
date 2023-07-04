@@ -9,18 +9,19 @@ import 'base_exception.dart';
 /// have a [Stream] that forwards exceptions to be handled in the user
 /// interface has been abstracted. The remaining concepts are in the example.
 abstract class BaseBloc {
-  LenientSubject<BaseException> _exception;
+  LenientSubject<BaseException>? _exception;
 
-  Observable<BaseException> get exceptionStream => _exception?.stream;
+  Stream<BaseException?>? get exceptionStream => _exception?.stream;
 
   dynamic forwardException(dynamic e) {
-    if (e is BaseException) {
+    if (e is BaseException?) {
       _exception?.add(e);
       return e;
-    } throw e;
+    }
+    throw e;
   }
 
   void initialize() => _exception = LenientSubject();
 
-  Future dispose() =>  _exception?.close();
+  Future dispose() => _exception?.close() ?? Future(() {});
 }

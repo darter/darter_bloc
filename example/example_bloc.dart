@@ -7,19 +7,19 @@ class ExampleBloc extends BaseBloc {
   // correct order when disposing of the BLoC is important, for avoiding
   // unexpected errors in your application. This can be a bit of a chore
   // for the programmer, but it can be avoided by using LenientSubject.
-  LenientSubject<String> _first, _second, _third, _output;
+  LenientSubject<String>? _first, _second, _third, _output;
 
   // Returns a stream of the desired output.
-  Observable<String> get outputStream => _output.stream;
+  get outputStream => _output?.stream;
 
   // Consumes the first of the required parameters (REQUIRED).
-  Sink<String> get firstSink => _first.sink;
+  Sink<String?>? get firstSink => _first?.sink;
 
   // Consumes the second of the required parameters (REQUIRED).
-  Sink<String> get secondSink => _second.sink;
+  Sink<String?>? get secondSink => _second?.sink;
 
   // Consumes the third of the required parameters (REQUIRED).
-  Sink<String> get thirdSink => _third.sink;
+  Sink<String?>? get thirdSink => _third?.sink;
 
   @override
   void initialize() {
@@ -32,31 +32,31 @@ class ExampleBloc extends BaseBloc {
     // As the LenientSubject have been configured to ignore repeated values,
     // these listeners will only trigger when new values are received. In this
     // way we can avoid unnecessary calls to our server, and are performant.
-    _first.stream.listen((String first) =>
-        _update(first, _second.value, _third.value));
-    _second.stream.listen((String second) =>
-        _update(_first.value, second, _third.value));
-    _third.stream.listen((String third) =>
-        _update(_first.value, _second.value, third));
+    _first?.stream.listen(
+        (String? first) => _update(first, _second?.value, _third?.value));
+    _second?.stream.listen(
+        (String? second) => _update(_first?.value, second, _third?.value));
+    _third?.stream.listen(
+        (String? third) => _update(_first?.value, _second?.value, third));
     super.initialize();
   }
 
-  void _update(String first, String second, String third) {
+  void _update(String? first, String? second, String? third) {
     // We generally want to have received a value for all required parameters.
     if (first != null && second != null && third != null) {
       // Here we would have made a call to our database manager, using the
       // various inputs for retrieving the value for the BLoC output.
-      Stream.value("example").listen((value) => _output.add(value));
+      Stream.value("example").listen((value) => _output?.add(value));
     }
   }
 
   @override
   Future dispose() {
-    List<Future> futures = List();
-    futures.add(_first.close());
-    futures.add(_second.close());
-    futures.add(_third.close());
-    futures.add(_output.close());
+    List<Future> futures = [];
+    if (_first != null) futures.add(_first!.close());
+    if (_second != null) futures.add(_second!.close());
+    if (_third != null) futures.add(_third!.close());
+    if (_output != null) futures.add(_output!.close());
     futures.add(super.dispose());
     return Future.wait(futures);
   }
