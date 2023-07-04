@@ -5,10 +5,10 @@ homepage: https://darter.io
 repository: https://github.com/darter/darter_bloc
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
-  rxdart: 0.27.7
+  rxdart: ^0.27.7
 
 dev_dependencies:
   test: 
