@@ -1,5 +1,3 @@
-import 'package:rxdart/rxdart.dart';
-
 import 'lenient_subject/lenient_subject.dart';
 import 'base_exception.dart';
 
