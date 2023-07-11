@@ -18,10 +18,10 @@ class ReferencedException implements BaseException {
   final int severity = Severity.WARNING;
   final String message;
 
-  ReferencedException([this.message]);
+  ReferencedException([this.message = '']);
 
   String toString() {
-    if (message == null) return "ReferencedException";
+    if (message.isEmpty) return "ReferencedException";
     return "ReferencedException: $message";
   }
 }
@@ -31,10 +31,10 @@ class MissingValueException implements BaseException {
   final int severity = Severity.WARNING;
   final String message;
 
-  MissingValueException([this.message]);
+  MissingValueException([this.message = '']);
 
   String toString() {
-    if (message == null) return "MissingValueException";
+    if (message.isEmpty) return "MissingValueException";
     return "MissingValueException: $message";
   }
 }
@@ -44,10 +44,10 @@ class ForbiddenValueException implements BaseException {
   final int severity = Severity.WARNING;
   final String message;
 
-  ForbiddenValueException([this.message]);
+  ForbiddenValueException([this.message = '']);
 
   String toString() {
-    if (message == null) return "ForbiddenValueException";
+    if (message.isEmpty) return "ForbiddenValueException";
     return "ForbiddenValueException: $message";
   }
 }
@@ -59,10 +59,10 @@ class SuccessfulException implements BaseException {
   final String message;
   final dynamic result;
 
-  SuccessfulException([this.message, this.result]);
+  SuccessfulException([this.message = '', this.result]);
 
   String toString() {
-    if (message == null) return "SuccessfulException";
+    if (message.isEmpty) return "SuccessfulException";
     return "SuccessfulException: $message";
   }
 }
@@ -72,10 +72,10 @@ class FailedException implements BaseException {
   final int severity = Severity.ERROR;
   final String message;
 
-  FailedException([this.message]);
+  FailedException([this.message = '']);
 
   String toString() {
-    if (message == null) return "FailedException";
+    if (message.isEmpty) return "FailedException";
     return "FailedException: $message";
   }
 }
@@ -85,10 +85,10 @@ class ForbiddenException implements BaseException {
   final int severity = Severity.ERROR;
   final String message;
 
-  ForbiddenException([this.message]);
+  ForbiddenException([this.message = '']);
 
   String toString() {
-    if (message == null) return "ForbiddenException";
+    if (message.isEmpty) return "ForbiddenException";
     return "ForbiddenException: $message";
   }
 }

@@ -1,5 +1,3 @@
-import 'package:rxdart/rxdart.dart';
-
 import '../lenient_subject/lenient_subject.dart';
 
 /// This class is meant to be used as the output of a [BaseBloc] when said
@@ -14,13 +12,13 @@ abstract class Outputer<T> {
 
   Outputer() : delegate = LenientSubject(ignoreRepeated: true);
 
-  ValueObservable<T> get stream => delegate.stream;
+  Stream<T?> get stream => delegate.stream;
 
   bool get hasValue => delegate.hasValue;
 
-  T get value => delegate.value;
+  T? get value => delegate.value;
 
-  set value(T newValue) => delegate.add(newValue);
+  set value(T? newValue) => delegate.add(newValue);
 
   // Add a new local value (created by a user interaction).
   void add(T event);

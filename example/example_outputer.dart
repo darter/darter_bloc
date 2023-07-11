@@ -11,21 +11,21 @@ class OutputerBloc extends BaseBloc {
   // correct order when disposing of the BLoC is important, for avoiding
   // unexpected errors in your application. This can be a bit of a chore
   // for the programmer, but it can be avoided by using LenientSubject.
-  LenientSubject<String> _first, _second;
+  LenientSubject<String>? _first, _second;
 
   // The outputer will allow us to update the interface immediately after a
   // user interaction, while making sure to still reflect the actual server's
   // state on the interface, in real-time.
-  CounterOutputer<String> _outputer;
+  late CounterOutputer<String?>? _outputer;
 
   // Returns a stream of the desired output.
-  Observable<String> get outputStream => _outputer.stream;
+  get outputStream => _outputer?.stream;
 
   // Consumes a required parameter (REQUIRED).
-  Sink<String> get firstSink => _first.sink;
+  Sink<String?>? get firstSink => _first?.sink;
 
   // Consumes a parameter that will update the BLoC output.
-  Sink<String> get secondSink => _second.sink;
+  Sink<String?>? get secondSink => _second?.sink;
 
   @override
   void initialize() {
@@ -37,20 +37,20 @@ class OutputerBloc extends BaseBloc {
     // As the LenientSubject has been configured to ignore repeated values,
     // this listener will only trigger when new values are received. In this
     // way we can avoid unnecessary calls to our server, and are performant.
-    _first.stream.listen((String first) => _update(first));
+    _first?.stream.listen((String? first) => _update(first));
     // User interactions are ignored if the changes they make are identical.
-    _second.stream.listen((String second) {
+    _second?.stream.listen((String? second) {
       // We start by modifying the output according to the user input.
-      _outputer.add(_outputer.value.replaceAll("example", second));
+      _outputer?.add(_outputer?.value?.replaceAll("example", second ?? ''));
       // Then we make the call to our database manager that applies the changes
       // in the server. If the method call is successful, the output will be
       // updated with the new value from the server, thanks to the listener we
       // set up previous to this one. If not, we will undo the local changes,
       // as well as allow a single repeated value through the user input, as
       // it's possible that the user might want to make the same action again.
-      Future.value(second).catchError((e)  {
-        _outputer.reset();
-        _second.allowNext();
+      Future.value(second).catchError((e) {
+        _outputer?.reset();
+        _second?.allowNext();
         forwardException(e);
       });
     });
@@ -58,20 +58,20 @@ class OutputerBloc extends BaseBloc {
     super.initialize();
   }
 
-  void _update(String first) {
+  void _update(String? first) {
     if (first != null) {
       // Here we would have made a call to our database manager, using the
       // various inputs for retrieving the value for the BLoC output.
-      Stream.value("example").listen((value) => _outputer.update(value));
+      Stream.value("example").listen((value) => _outputer?.update(value));
     }
   }
 
   @override
   Future dispose() {
-    List<Future> futures = List();
-    futures.add(_first.close());
-    futures.add(_second.close());
-    futures.add(_outputer.close());
+    List<Future> futures = [];
+    if (_first != null) futures.add(_first!.close());
+    if (_second != null) futures.add(_second!.close());
+    if (_outputer != null) futures.add(_outputer!.close());
     futures.add(super.dispose());
     return Future.wait(futures);
   }
